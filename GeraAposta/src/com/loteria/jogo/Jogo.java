@@ -28,16 +28,21 @@ public class Jogo {
         this.aposta = new ArrayList();
     }
 
-    public void selecionaJogo() {
+    public String selecionaJogo() {
         if (jogo.equals("loto")) {
             tamAposta = 15;
             tamJogo = 30;
+            return "loto";
         } else if (jogo.equals("mega")) {
             tamAposta = 4;
             tamJogo = 60;
+            return "mega";
         } else if (jogo.equals("quina")) {
             tamAposta = 5;
             tamJogo = 80;
+            return "quina";
+        }else{
+            return "nulo";
         }
     }
 

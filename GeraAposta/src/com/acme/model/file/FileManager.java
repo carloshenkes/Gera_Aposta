@@ -8,7 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FileManager {
 
@@ -16,7 +16,7 @@ public class FileManager {
      * @param jo
      * @param f
      */
-    public static void saveFile(ArrayList jo, File f) {
+    public static void saveFile(HashMap jo, File f) {
 
         FileOutputStream fos = null;
         ObjectOutputStream oos = null;

@@ -4,22 +4,24 @@ import com.acme.model.file.FileManager;
 import com.loteria.jogo.Jogo;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.JFileChooser;
 
-
 /**
- *@version 0.1
+ * @version 0.1
  * @author carloshenkes
  */
 public class PrincipalFrame extends javax.swing.JFrame {
-    
+
     private String aposta;
     private Jogo jogo;
-    ArrayList jogosLoto,jogosMega,jogos;
-    
+    ArrayList jogosLoto, jogosMega;
+    HashMap<String, ArrayList> jogos;
+
     public PrincipalFrame() {
         initComponents();
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -77,7 +79,12 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         jLabel2.setText("Quantddade de jogos:");
 
-        jbArmazenaJogos.setText("jButton1");
+        jbArmazenaJogos.setText("Armazenar");
+        jbArmazenaJogos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jbArmazenaJogosMouseClicked(evt);
+            }
+        });
 
         jLabel1.setText("Armazena Jogos");
 
@@ -110,8 +117,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jbArmazenaJogos)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jbArmazenaJogos)
+                        .addGap(6, 6, 6)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -164,6 +172,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 count++;
                 aposta = aposta + j.geraAposta().toString() + "\n";
                 jogosLoto.add(aposta);
+                if (!j.selecionaJogo().equals("null")) {
+                    jogos.put(j.selecionaJogo(), jogosLoto);
+                }
             }
             jtaAposta.setText(aposta);
         } catch (Exception ex) {
@@ -186,6 +197,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 aposta = aposta + j.geraAposta().toString() + "\n";
                 jogosMega.add(aposta);
                 count++;
+                if (!j.selecionaJogo().equals("null")) {
+                    jogos.put(j.selecionaJogo(), jogosMega);
+                }
             }
             jtaAposta.setText(aposta.replace("[", "").replace("]", ""));
         } catch (Exception ex) {
@@ -194,16 +208,20 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jbMegaMouseClicked
 
     private void jtfqntJogosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfqntJogosActionPerformed
-   
+
     }//GEN-LAST:event_jtfqntJogosActionPerformed
 
-    private void save(){
+    private void jbArmazenaJogosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbArmazenaJogosMouseClicked
+        save();
+    }//GEN-LAST:event_jbArmazenaJogosMouseClicked
+
+    private void save() {
         int result = jfcFiles.showSaveDialog(this);
-            if (result == JFileChooser.CANCEL_OPTION) {
-                return;
-            }
-            File f = jfcFiles.getSelectedFile();
-            FileManager.saveFile(jogos, f);
+        if (result == JFileChooser.CANCEL_OPTION) {
+            return;
+        }
+        File f = jfcFiles.getSelectedFile();
+        FileManager.saveFile(jogos, f);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
