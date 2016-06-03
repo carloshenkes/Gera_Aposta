@@ -39,6 +39,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jbArmazenaJogos = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jtfQntJogAr = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jbLoadGames = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(209, 220, 58));
@@ -88,6 +91,15 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         jLabel1.setText("Armazena Jogos");
 
+        jLabel3.setText("jogos ");
+
+        jbLoadGames.setText("Carregar Jogos");
+        jbLoadGames.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jbLoadGamesMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -113,9 +125,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jtfNumExcludeMega))
                             .addComponent(jlApostaGerada))
-                        .addGap(0, 99, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtfQntJogAr, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                        .addComponent(jbLoadGames)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jbArmazenaJogos)
@@ -145,7 +162,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbArmazenaJogos)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel3)
+                    .addComponent(jtfQntJogAr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbLoadGames))
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
@@ -215,6 +235,20 @@ public class PrincipalFrame extends javax.swing.JFrame {
         save();
     }//GEN-LAST:event_jbArmazenaJogosMouseClicked
 
+    private void jbLoadGamesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbLoadGamesMouseClicked
+        open();
+    }//GEN-LAST:event_jbLoadGamesMouseClicked
+
+    void open() {
+        int result = jfcFiles.showOpenDialog(this);
+        if (result == JFileChooser.CANCEL_OPTION) {
+            return;
+        }
+        File f = jfcFiles.getSelectedFile();
+        this.jogos = FileManager.openFile(f);
+        //jtfQntJogAr.setText(String.valueOf(jogos.size()));
+    }
+
     private void save() {
         int result = jfcFiles.showSaveDialog(this);
         if (result == JFileChooser.CANCEL_OPTION) {
@@ -226,8 +260,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbArmazenaJogos;
+    private javax.swing.JButton jbLoadGames;
     private javax.swing.JButton jbLoto;
     private javax.swing.JButton jbMega;
     private javax.swing.JFileChooser jfcFiles;
@@ -236,6 +272,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JTextArea jtaAposta;
     private javax.swing.JTextField jtfNumExcludeLoto;
     private javax.swing.JTextField jtfNumExcludeMega;
+    private javax.swing.JTextField jtfQntJogAr;
     private javax.swing.JTextField jtfqntJogos;
     // End of variables declaration//GEN-END:variables
 }

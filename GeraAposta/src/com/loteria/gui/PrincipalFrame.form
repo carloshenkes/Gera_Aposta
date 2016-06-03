@@ -55,10 +55,15 @@
                           </Group>
                           <Component id="jlApostaGerada" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="99" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jtfQntJogAr" min="-2" pref="52" max="-2" attributes="0"/>
+                      <EmptySpace pref="9" max="32767" attributes="0"/>
+                      <Component id="jbLoadGames" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jbArmazenaJogos" min="-2" max="-2" attributes="0"/>
@@ -83,7 +88,7 @@
                   <Component id="jbLoto" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jtfNumExcludeLoto" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jbMega" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jtfNumExcludeMega" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -96,6 +101,9 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jbArmazenaJogos" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jtfQntJogAr" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jbLoadGames" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="13" max="32767" attributes="0"/>
           </Group>
@@ -172,6 +180,21 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Armazena Jogos"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jtfQntJogAr">
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jogos "/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jbLoadGames">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Carregar Jogos"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jbLoadGamesMouseClicked"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
