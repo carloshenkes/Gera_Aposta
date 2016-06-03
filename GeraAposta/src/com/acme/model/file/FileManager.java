@@ -39,7 +39,7 @@ public class FileManager {
         }
     }
 
-    public static Jogo openFile(File f) {
+    public static HashMap openFile(File f) {
 
         FileInputStream fis = null;
         ObjectInputStream ois = null;
@@ -47,8 +47,8 @@ public class FileManager {
         try {
             fis = new FileInputStream(f);
             ois = new ObjectInputStream(fis);
-            Jogo lib = (Jogo) ois.readObject();
-            return lib;
+            HashMap jogos = (HashMap) ois.readObject();
+            return jogos;
 
         } catch (FileNotFoundException ex) {
             System.out.println("Problema:" + ex.getMessage());
