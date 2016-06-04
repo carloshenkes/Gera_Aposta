@@ -1,5 +1,5 @@
 package com.acme.model.file;
-//teste 
+
 import com.loteria.jogo.Jogo;
 import java.io.File;
 import java.io.FileInputStream;
