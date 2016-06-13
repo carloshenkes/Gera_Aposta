@@ -6,6 +6,7 @@ public class StartApp {
     public static void main(String[] args){
         PrincipalFrame f = new PrincipalFrame();
         f.setVisible(true);
+        System.out.println("jj");
     }
     
 }
