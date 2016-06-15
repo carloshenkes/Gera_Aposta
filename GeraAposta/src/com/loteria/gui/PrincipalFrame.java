@@ -278,12 +278,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private void jbCarJogAntMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbCarJogAntMouseClicked
         try {
             /*byte[] jogosAnt = FileManager.getJogosAnteriores("quina.zip", "http://www1.caixa.gov.br/loterias/_arquivos/loterias/D_quina.zip");
-            jtfQntJogAn.setText(String.valueOf(jogosAnt.length));
+            
             String s = Arrays.toString(jogosAnt);
             
             System.out.println(s.subSequence(1, 60));
              */
             jogosAntQuina = FileManager.convertXLS2Array();
+            jtfQntJogAn.setText(String.valueOf(jogosAntQuina.size()));
         } catch (IOException ex) {
             Logger.getLogger(PrincipalFrame.class.getName()).log(Level.SEVERE, null, ex);
         } catch (BiffException ex) {
