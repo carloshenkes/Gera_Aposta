@@ -3,9 +3,15 @@ package com.loteria.gui;
 import com.acme.model.file.FileManager;
 import com.loteria.jogo.Jogo;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import jxl.read.biff.BiffException;
 
 /**
  * @version 0.1
@@ -15,8 +21,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private String aposta;
     private Jogo jogo;
-    ArrayList jogosLoto, jogosMega;
-    HashMap<String, ArrayList> jogos;
+    ArrayList jogosLoto, jogosMega, jogosQuina, jogosAntQuina;
 
     public PrincipalFrame() {
         initComponents();
@@ -42,6 +47,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
         jtfQntJogAr = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jbLoadGames = new javax.swing.JButton();
+        jbCarJogAnt = new javax.swing.JButton();
+        jtfQntJogAn = new javax.swing.JTextField();
+        jbQuina = new javax.swing.JButton();
+        jtfNumExludeQuina = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(209, 220, 58));
@@ -100,6 +109,20 @@ public class PrincipalFrame extends javax.swing.JFrame {
             }
         });
 
+        jbCarJogAnt.setText("Carregar jogos Anteriores");
+        jbCarJogAnt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jbCarJogAntMouseClicked(evt);
+            }
+        });
+
+        jbQuina.setText("Quina");
+        jbQuina.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jbQuinaMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -108,6 +131,17 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtfQntJogAr, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbLoadGames)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jbArmazenaJogos)
+                        .addGap(6, 6, 6))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -116,27 +150,22 @@ public class PrincipalFrame extends javax.swing.JFrame {
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jtfqntJogos, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jlApostaGerada)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jbLoto)
-                                .addGap(18, 18, 18)
-                                .addComponent(jtfNumExcludeLoto))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jbMega)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jbMega)
+                                    .addComponent(jbQuina)
+                                    .addComponent(jbLoto))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jtfNumExcludeMega))
-                            .addComponent(jlApostaGerada))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtfQntJogAr, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
-                        .addComponent(jbLoadGames)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jbArmazenaJogos)
-                        .addGap(6, 6, 6)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jtfNumExcludeLoto)
+                                    .addComponent(jtfNumExcludeMega)
+                                    .addComponent(jtfNumExludeQuina))))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jbCarJogAnt)
+                            .addComponent(jtfQntJogAn, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -146,16 +175,22 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlTitle)
                     .addComponent(jLabel2)
-                    .addComponent(jtfqntJogos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtfqntJogos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbCarJogAnt))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbLoto)
-                    .addComponent(jtfNumExcludeLoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jtfNumExcludeLoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfQntJogAn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbMega)
                     .addComponent(jtfNumExcludeMega, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbQuina)
+                    .addComponent(jtfNumExludeQuina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addComponent(jlApostaGerada)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -166,7 +201,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jtfQntJogAr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbLoadGames))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -193,7 +228,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 aposta = aposta + j.geraAposta().toString() + "\n";
                 jogosLoto.add(aposta);
                 if (!j.selecionaJogo().equals("null")) {
-                    jogos.put(j.selecionaJogo(), jogosLoto);
+
                 }
             }
             jtaAposta.setText(aposta);
@@ -218,9 +253,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 jogosMega.add(aposta);
                 count++;
                 if (!j.selecionaJogo().equals("null")) {
-                    jogos.put(j.selecionaJogo(), jogosMega);
+
                 }
             }
+            
             jtaAposta.setText(aposta.replace("[", "").replace("]", ""));
         } catch (Exception ex) {
 
@@ -239,13 +275,53 @@ public class PrincipalFrame extends javax.swing.JFrame {
         open();
     }//GEN-LAST:event_jbLoadGamesMouseClicked
 
+    private void jbCarJogAntMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbCarJogAntMouseClicked
+        try {
+            /*byte[] jogosAnt = FileManager.getJogosAnteriores("quina.zip", "http://www1.caixa.gov.br/loterias/_arquivos/loterias/D_quina.zip");
+            jtfQntJogAn.setText(String.valueOf(jogosAnt.length));
+            String s = Arrays.toString(jogosAnt);
+            
+            System.out.println(s.subSequence(1, 60));
+             */
+            jogosAntQuina = FileManager.convertXLS2Array();
+        } catch (IOException ex) {
+            Logger.getLogger(PrincipalFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (BiffException ex) {
+            Logger.getLogger(PrincipalFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jbCarJogAntMouseClicked
+
+    private void jbQuinaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbQuinaMouseClicked
+        jogosQuina = new ArrayList<String>();;
+        String aposta = new String();
+        try {
+            int count = 0;
+            Jogo j = new Jogo("quina");
+            j.setQntJogos(Integer.valueOf(jtfqntJogos.getText()));
+            j.separaNumeros(jtfNumExludeQuina.getText());
+            j.selecionaJogo();
+            while (count < j.getQntJogos()) {
+                jtaAposta.setText(j.geraAposta(jogosAntQuina).toString());
+                System.out.println(j.geraAposta(jogosAntQuina).toString());
+                aposta = aposta + j.geraAposta(jogosAntQuina).toString() + "\n";
+                jogosQuina.add(aposta);
+                count++;
+                if (!j.selecionaJogo().equals("null")) {
+
+                }
+            }
+            jtaAposta.setText(aposta.replace("[", "").replace("]", ""));
+        } catch (Exception ex) {
+        }
+        }//GEN-LAST:event_jbQuinaMouseClicked
+
     void open() {
         int result = jfcFiles.showOpenDialog(this);
         if (result == JFileChooser.CANCEL_OPTION) {
             return;
         }
         File f = jfcFiles.getSelectedFile();
-        this.jogos = FileManager.openFile(f);
+
         //jtfQntJogAr.setText(String.valueOf(jogos.size()));
     }
 
@@ -255,7 +331,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             return;
         }
         File f = jfcFiles.getSelectedFile();
-        FileManager.saveFile(jogos, f);
+        FileManager.saveFile(jogosAntQuina, f);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -263,15 +339,19 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbArmazenaJogos;
+    private javax.swing.JButton jbCarJogAnt;
     private javax.swing.JButton jbLoadGames;
     private javax.swing.JButton jbLoto;
     private javax.swing.JButton jbMega;
+    private javax.swing.JButton jbQuina;
     private javax.swing.JFileChooser jfcFiles;
     private javax.swing.JLabel jlApostaGerada;
     private javax.swing.JLabel jlTitle;
     private javax.swing.JTextArea jtaAposta;
     private javax.swing.JTextField jtfNumExcludeLoto;
     private javax.swing.JTextField jtfNumExcludeMega;
+    private javax.swing.JTextField jtfNumExludeQuina;
+    private javax.swing.JTextField jtfQntJogAn;
     private javax.swing.JTextField jtfQntJogAr;
     private javax.swing.JTextField jtfqntJogos;
     // End of variables declaration//GEN-END:variables
