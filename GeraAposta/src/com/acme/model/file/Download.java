@@ -1,4 +1,4 @@
-package com.loteria.jogo;
+package com.acme.model.file;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
